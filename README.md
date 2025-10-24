@@ -2,38 +2,41 @@ Autores:
 * Andre Hilacondo Begazo
 * Jorge Escobedo Ocaña
 
-## SOLUCION
+## 1. Solucion
 
 La solución fue re-implementar el manejo de la lista para usar las herramientas de estado nativas de Jetpack Compose.
 
-Un primer cambio fue, Adopción de **SnapshotStateList (mutableStateListOf())**:
+Un primer cambio fue, Adopción de `SnapshotStateList (mutableStateListOf())`:
 
-Se reemplazó la lista estándar por remember { mutableStateListOf<Curso>() }.
+Se reemplazó la lista estándar por `remember { mutableStateListOf<Curso>() }`.
 
-**Qué es:** Esto crea una SnapshotStateList, una lista especial que está integrada con el sistema de estado de Compose.
+> **Qué es:** Esto crea una SnapshotStateList, una lista especial que está integrada con el sistema de estado de Compose.
 
-**Cómo funciona:** Esta lista notifica a Compose cada vez que sus elementos son añadidos, eliminados o (crucialmente) reemplazados.
+> **Cómo funciona:** Esta lista notifica a Compose cada vez que sus elementos son añadidos, eliminados o (crucialmente) reemplazados.
 
 * ANTES (No Observable)
-
+```
 var cursos = mutableListOf<Curso>()
+```
 
 * DESPUÉS (Observable)
-
+```
 val cursos = remember { mutableStateListOf<Curso>() }
+```
 
-Entonces para asegurar que la SnapshotStateList detecte el cambio, dejamos de mutar el objeto. Ahora, creamos una copia (.copy()) del objeto con los datos nuevos y reemplazamos el objeto antiguo en la lista.
+Entonces para asegurar que la `SnapshotStateList` detecte el cambio, dejamos de mutar el objeto. Ahora, creamos una copia (.copy()) del objeto con los datos nuevos y reemplazamos el objeto antiguo en la lista.
 
 * ANTES (Mutación directa)
-
+```
 curso.nombre = "NuevoNombre"
+```
 
 * DESPUÉS (Reemplazo con copia)
-
+```
 val cursoModificado = curso.copy(nombre = "NuevoNombre")
 
 cursos[index] = cursoModificado
-
+```
 
 ## 2. Conclusión
 
