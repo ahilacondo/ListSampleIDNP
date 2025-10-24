@@ -43,6 +43,6 @@ Al usar mutableStateListOf, hacemos que la lista cursos sea un estado observable
 
 Al usar .copy() y el reemplazo (cursos[index] = ...), disparamos el notificador de la SnapshotStateList.
 
-Esta notificación le dice a Compose que el estado ha cambiado, lo que dispara la Fase 1 (Recomposición).
+Esta notificación le dice a Compose que el estado ha cambiado, lo que dispara la recomposicion
 
 El LazyColumn, que observa cursos, se recompone y redibuja solo el ítem modificado, reflejando el cambio al instante.
